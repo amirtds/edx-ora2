@@ -261,6 +261,84 @@
       color: $copy-color;
     }
 
+  .answer__value {
+      opacity: 0;
+      &:checked {
+          + label:after {
+              opacity: 1;
+          }
+      }
+
+      .no-borderradius & {
+          background: transparent;
+          position: relative;
+          opacity: 1;
+      }
+
+      + label {
+          position: relative;
+          cursor: pointer;
+          padding-left: 28px;
+
+          .no-borderradius & {
+              padding: 0;
+          }
+
+          &:before {
+              position: absolute;
+              left: 0;
+              top: -1px;
+              content: '';
+              background: #f1f1f1;
+              width: 20px;
+              height: 20px;
+              display: block;
+              border-radius: 3px;
+              border: 1px solid #ff0000;
+
+              .no-borderradius & {
+                  display: none;
+              }
+          }
+
+          &:after {
+              content: '\A';
+              position: absolute;
+              top: -1px;
+              left: 0;
+              width: 20px;
+              height: 20px;
+              line-height: 20px;
+              text-align: center;
+              color: #000000;
+              opacity: 0;
+
+              .no-borderradius & {
+                  display: none;
+              }
+          }
+      }
+    }
+
+    .answer__value {
+    + label {
+        &:before {
+            border-radius: 20px;
+            border-color: #949494;
+        }
+
+        &:after {
+            background: #000000;
+            top: 4px;
+            left: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+            line-height: 14px;
+        }
+      }
+    }
+
     .answer__value {
       @include margin-right(($baseline-v/2));
 
