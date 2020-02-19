@@ -786,14 +786,23 @@ OpenAssessment.ResponseView.prototype = {
      */
     removeUploadedFile: function(filenum) {
         var view = this;
-        return this.server.removeUploadedFile(filenum).done(function() {
-            var sel = $('.step--response', view.element);
-            var block = sel.find('.submission__answer__file__block__' + filenum);
-            block.html('');
-            block.prop('deleted', true);
-            view.checkSubmissionAbility();
-        }).fail(function(errMsg) {
-            view.baseView.toggleActionError('delete', errMsg);
+        return view.confirmRemoveUploadedFile().done(function() {
+            return view.server.removeUploadedFile(filenum).done(function() {
+                var sel = $('.step--response', view.element);
+                var block = sel.find('.submission__answer__file__block__' + filenum);
+                block.html('');
+                block.prop('deleted', true);
+                view.checkSubmissionAbility();
+            }).fail(function(errMsg) {
+                view.baseView.toggleActionError('delete', errMsg);
+            });
+        });
+    },
+
+    confirmRemoveUploadedFile: function() {
+        var msg = gettext('Are you sure you want to delete this file? It cannot be restored.');
+        return $.Deferred(function(defer) {
+            if (confirm(msg)) {defer.resolve();} else {defer.reject();}
         });
     },
 
